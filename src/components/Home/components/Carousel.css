@@ -1,0 +1,77 @@
+.carousel {
+  overflow: hidden;
+  /* position :relative */
+}
+
+.inner {
+  white-space: nowrap;
+  transition: transform 0.3s;
+}
+
+.carousel-item {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  width: 600px;
+  overflow: hidden;
+  position: relative;
+}
+
+.indicators {
+  display: flex;
+  justify-content: center;
+}
+
+.c-indicator {
+  margin: 5px;
+  border: none;
+  outline: none;
+  background-color: grey;
+  border-radius: 50%;
+  height: 4px;
+  width: 4px;
+  cursor: pointer;
+}
+
+.indicators > button.active {
+  background-color: black;
+  color: #fff;
+}
+.carousel-left-button {
+  top: 40%;
+  left: 8rem;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  background-color: rgba(114, 109, 109, 0.4);
+  color: white;
+  padding: 10px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+.carousel-right-button {
+  top: 40%;
+  right: 8rem;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  background-color: rgba(114, 109, 109, 0.4);
+  color: white;
+  padding: 10px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+@media (max-width: 968px) {
+  .carousel-left-button,
+  .carousel-right-button {
+    /* top:25%; */
+    top: 20rem;
+  }
+}
+@media (max-width: 768px) {
+  .carousel-left-button,
+  .carousel-right-button {
+    display: none;
+  }
+}
