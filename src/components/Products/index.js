@@ -9,7 +9,7 @@ const Products = () => {
   const [categories, setCategories] = useState([]);
   const [error, setError] = useState("");
   const [selected, setSelected] = useState(false);
-  const [selectedCategory] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
 
   const fetchProducts = async () => {
     await fetch("http://localhost:5000/products")
@@ -35,16 +35,26 @@ const Products = () => {
     fetchProducts();
   }, []);
 
-  const filterProducts = (id) => {
+  const filterProducts = (e, id) => {
+    e.preventDefault();
+    setSelectedCategory(id);
     setSelected(!selected);
-    if (selected) {
+    if (!selected) {
       const result = products.filter((p) => p.category === id);
       setProducts(result);
     } else {
       fetchProducts();
+      // e.target.style.backgroundColor="red"
     }
   };
-  const handleDropdownChange = (e) => {};
+  const handleDropdownChange = (e) => {
+     setSelectedCategory(e.target.value);
+    if (e.target.value === "All") {
+      fetchProducts();
+    } else {
+      filterProducts(e, e.target.value);
+    }
+  };
 
   const addToCart = async (e, product) => {
     e.preventDefault();
@@ -81,10 +91,17 @@ const Products = () => {
   return (
     <main className="products-container container-padding">
       <aside>
-        <select value={selectedCategory} onChange={handleDropdownChange} className="category-dropdown">
+        <select
+          value={selectedCategory}
+          onChange={handleDropdownChange}
+          className="category-dropdown"
+        >
+          <option value={`All`}>All</option>
           {categories &&
             categories.map((category, key) => (
-              <option key={key} value={category.id}>{category.name}</option>
+              <option key={key} value={category.id}>
+                {category.name}
+              </option>
             ))}
         </select>
         <nav className="products-sidebar">
@@ -95,9 +112,13 @@ const Products = () => {
                 <li key={key}>
                   <button
                     key={category.id}
-                    className="category-btn"
-                    onClick={() => {
-                      filterProducts(category.id);
+                    className={
+                      selectedCategory == category.id
+                        ? `isActiveBtn`
+                        : `category-btn`
+                    }
+                    onClick={(e) => {
+                      filterProducts(e, category.id);
                     }}
                   >
                     {category.name}
@@ -118,14 +139,26 @@ const Products = () => {
               <div className="image-container">
                 <img
                   src={process.env.PUBLIC_URL + product.imageURL}
-                  // width="200"
-                  // height="200"
                   className="product-image"
                 />
-
                 <span className="product-description">
                   {product.description}
                 </span>
+              </div>
+              <div className="product-mobile-box">
+                <img
+                  src={process.env.PUBLIC_URL + product.imageURL}
+                  className="product-mobile-image"
+                />
+                <div>
+                  <span className="product-mobile-description">
+                    {product.description}
+                  </span>
+                  <button
+                    className="buy-mobile-button"
+                    onClick={(e) => addToCart(e, product)}
+                  >{`Buy Now @Rs. ${product.price}`}</button>
+                </div>
               </div>
               <div className="product-footer">
                 <button
