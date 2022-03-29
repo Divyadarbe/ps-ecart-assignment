@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import "../../styles/styles.css";
-import "../../styles/mediaQueries.css";
 
 const Signup = () => {
   const [data, setData] = useState({

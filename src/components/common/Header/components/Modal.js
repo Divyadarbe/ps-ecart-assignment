@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 // import "./Modal.css";
-import "../../../../styles/styles.css"
-import "../../../../styles/mediaQueries.css"
+import "../../../../styles/styles.css";
+import "./modal.css";
 
 const Modal = ({ handleClose, show, cartData, setCartData }) => {
   const [cart_total, setCartTotal] = useState(0);

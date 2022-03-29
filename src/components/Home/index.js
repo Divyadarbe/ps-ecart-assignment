@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Carousel from "./components/Carousel";
 import { CarouselItem } from "./components/Carousel";
 import "../../styles/styles.css";
-import "../../styles/mediaQueries.css";
+import "./home.css";
 
 const Home = ({ history }) => {
   const [categories, setCategories] = useState([]);
@@ -21,7 +21,7 @@ const Home = ({ history }) => {
       .then((data) => setBanners(data))
       .catch((err) => setError(err));
   };
-  
+
   useEffect(() => {
     fetchBanners();
     fetchCategories();
@@ -39,7 +39,8 @@ const Home = ({ history }) => {
           <Carousel>
             {banners.map((banner) => (
               <CarouselItem key={banner.id}>
-                <img className="carousel-image"
+                <img
+                  className="carousel-image"
                   src={process.env.PUBLIC_URL + banner.bannerImageUrl}
                   alt="Banner"
                 />

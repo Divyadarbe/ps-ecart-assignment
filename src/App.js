@@ -7,7 +7,6 @@ import Login from "./components/Login";
 import Products from "./components/Products";
 import SignUp from "./components/Signup";
 import "./styles/styles.css";
-import "./styles/mediaQueries.css";
 
 export const CartContext = createContext();
 

@@ -1,17 +1,17 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
-import { CartContext} from "../../../App.js"
+import { CartContext } from "../../../App.js";
 import Modal from "./components/Modal";
 import { FaShoppingCart } from "react-icons/fa";
 // import "./style.css";
-import "../../../styles/styles.css"
-import "../../../styles/mediaQueries.css"
+import "../../../styles/styles.css";
+import "./header.css";
 
 const Header = () => {
   const { cartData, setCartData } = useContext(CartContext);
   const [show, setShow] = useState(false);
   const [count, setCount] = useState(0);
- 
+
   useEffect(() => {
     let cart_count = 0;
     for (let i = 0; i < cartData.length; i++) {
