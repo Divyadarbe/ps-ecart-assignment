@@ -16,6 +16,7 @@
   right: 8rem;
   max-height: 55rem;
   overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .display-block {
@@ -86,12 +87,17 @@
 .cproduct-container {
   display: flex;
   align-items: center;
-  padding: 1.6rem;
+  padding: 0 10px;
   background: white;
   margin: 10px 0;
 }
-.product-image {
+.prouct-details {
+  width: 100%;
+}
+.cproduct-image {
   margin-right: 10px;
+  width: 8.6rem;
+  height: 8.6rem;
 }
 .cproduct-name {
   font-size: medium;
@@ -100,7 +106,7 @@
 .cqty {
   color: black;
   font-size: 1.5rem;
-  font-weight: 500;
+  font-weight: 600;
   margin: 0 10px;
 }
 .cprice-container {
@@ -108,6 +114,7 @@
   align-items: center;
   justify-content: space-between;
   margin: 10px 0;
+  width: 100%;
 }
 .cbtn {
   border: none;
@@ -119,6 +126,15 @@
 }
 .btn-top-margin {
   margin-top: 10px;
+}
+.cheaper-box {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  border-radius: 5px;
+  padding: 10px;
+  background: white;
+  margin: 10px;
 }
 @media (max-width: 59em) {
   .modal {
@@ -142,5 +158,9 @@
   }
   .cproduct-container {
     padding: 1.6rem 0;
+  }
+  .cbtn {
+    border-radius: 5px;
+    padding: 4px 10px;
   }
 }

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-// import "./Modal.css";
 import "../../../../styles/styles.css";
 import "./modal.css";
 
@@ -57,10 +56,8 @@ const Modal = ({ handleClose, show, cartData, setCartData }) => {
               <div key={c.id} className="cproduct-container">
                 <img
                   src={process.env.PUBLIC_URL + c.imageURL}
-                  width="60"
-                  height={60}
                   alt={`image`}
-                  className="product-image"
+                  className="cproduct-image"
                 />
                 <div className="prouct-details">
                   <span className="cproduct-name">{c.name}</span>
@@ -81,20 +78,30 @@ const Modal = ({ handleClose, show, cartData, setCartData }) => {
                       </button>
                       <span className="cqty"> X Rs.{c.price}</span>
                     </div>
-                    <span className="cqty"> {c.price * c.quantity}</span>
-                    {/* <span>Rs.{cart_total}</span> */}
+                    <span className="cqty" style={{ fontSize: "1.8rem" }}>
+                      {" "}
+                      {c.price * c.quantity}
+                    </span>
                   </div>
                 </div>
               </div>
             ))
           ) : (
             <div className="empty-cart-container">
-              {/* <div> */}
               <span className="empty-cart-text1">No items in your cart</span>
               <span className="empty-cart-text2">
                 Your favourite items are just a click away
               </span>
-              {/* </div> */}
+            </div>
+          )}
+          {cartData.length > 0 && (
+            <div className="cheaper-box">
+              <img
+                src={process.env.PUBLIC_URL + `/static/images/lowest-price.png`}
+                alt="image"
+                style={{ marginRight: "10px" }}
+              />
+              <span>You won't find it cheaper anywhere</span>
             </div>
           )}
         </div>
