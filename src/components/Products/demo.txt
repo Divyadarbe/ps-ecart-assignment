@@ -10,7 +10,6 @@ const Products = () => {
   const [error, setError] = useState("");
   const [selected, setSelected] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("");
-  const [filteredProducts, setFilteredProducts] = useState([]);
 
   const fetchProducts = async () => {
     await fetch("http://localhost:5000/products")
@@ -20,7 +19,6 @@ const Products = () => {
           data[i].quantity = 1;
         }
         setProducts(data);
-        setFilteredProducts(data);
       })
       .catch((err) => setError(err));
   };
@@ -43,20 +41,19 @@ const Products = () => {
     setSelected(!selected);
     if (!selected) {
       const result = products.filter((p) => p.category === id);
-      setFilteredProducts(result);
+      setProducts(result);
     } else {
-      setFilteredProducts(products);
+      fetchProducts();
     }
   };
   const handleDropdownChange = (e) => {
     setSelectedCategory(e.target.value);
     // filterProducts(e, e.target.value);
-    if (e.target.value === "All") {
-      setFilteredProducts(products);
-    } else {
-      const result = products.filter((p) => p.category === e.target.value);
-      setFilteredProducts(result);
-    }
+    // if (e.target.value === "All") {
+    //   fetchProducts();
+    // } else {
+    //   filterProducts(e, e.target.value);
+    // }
   };
 
   const addToCart = async (e, product) => {
@@ -124,7 +121,7 @@ const Products = () => {
                         <button
                           key={category.id}
                           className={
-                            selectedCategory == category.id && selected
+                            selectedCategory == category.id
                               ? `isActiveBtn`
                               : `category-btn`
                           }
@@ -142,7 +139,7 @@ const Products = () => {
       </aside>
       <section className="products-box">
         {products && products.length > 0 ? (
-          filteredProducts.map((product, key) => (
+          products.map((product, key) => (
             <div className="product" key={key}>
               <div className="product-name-container">
                 <span className="product-name">{product.name}</span>
