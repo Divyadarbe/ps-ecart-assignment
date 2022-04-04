@@ -6,7 +6,7 @@ const Footer = () => {
   return (
     <div className="footer-container container-padding ">
       <footer>
-        Copyright @ 2011-2018 Sabka Bazar Grocery Supplies Pvt Ltd
+        Copyright &#169; 2011-2018 Sabka Bazar Grocery Supplies Pvt Ltd
       </footer>
     </div>
   );

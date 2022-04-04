@@ -1,6 +1,9 @@
 import React, { useState, useEffect, useContext } from "react";
 import { CartContext } from "../../App.js";
 import "../../styles/styles.css";
+import CategoryList from "./components/CategoryList.js";
+import CategoryMobileDropdown from "./components/CategoryMobileDropdown.js";
+import ProductCard from "./components/ProductCard.js";
 import "./product.css";
 
 const Products = () => {
@@ -50,7 +53,6 @@ const Products = () => {
   };
   const handleDropdownChange = (e) => {
     setSelectedCategory(e.target.value);
-    // filterProducts(e, e.target.value);
     if (e.target.value === "All") {
       setFilteredProducts(products);
     } else {
@@ -68,22 +70,19 @@ const Products = () => {
     await fetch("http://localhost:5000/addToCart", requestOptions)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
+        let t = [...cartData];
         if (data.response == "Success") {
-          if (cartData.length > 0) {
-            for (let i = 0; i < cartData.length; i++) {
-              if (cartData[i].id == product.id) {
-                cartData[i].quantity = cartData[i].quantity + 1;
-                setCartData([...cartData]);
-              } else {
-                setCartData([...cartData, product]);
-              }
-            }
+          const index = cartData
+            .map(function (x) {
+              return x.id;
+            })
+            .indexOf(product.id);
+          if (index == -1) {
+            t.push(product);
           } else {
-            setCartData([...cartData, product]);
+            t[index].quantity = t[index].quantity + 1;
           }
-        } else {
-          console.log("error handling");
+          setCartData(t);
         }
       })
       .catch((err) => setError(err));
@@ -92,99 +91,22 @@ const Products = () => {
   return (
     <main className="products-container container-padding">
       <aside>
-        <select
-          value={selectedCategory}
-          onChange={handleDropdownChange}
-          className="category-dropdown"
-        >
-          <option value={`All`}>All</option>
-          {categories &&
-            categories.length > 0 &&
-            categories
-              .sort((a, b) => (a.order > b.order ? 1 : -1))
-              .map(
-                (category, key) =>
-                  category.order != "-1" && (
-                    <option key={key} value={category.id}>
-                      {category.name}
-                    </option>
-                  )
-              )}
-        </select>
-        <nav className="products-sidebar">
-          <ul className="pcategories-container">
-            {categories &&
-              categories.length > 0 &&
-              categories
-                .sort((a, b) => (a.order > b.order ? 1 : -1))
-                .map(
-                  (category, key) =>
-                    category.order != "-1" && (
-                      <li key={key}>
-                        <button
-                          key={category.id}
-                          className={
-                            selectedCategory == category.id && selected
-                              ? `isActiveBtn`
-                              : `category-btn`
-                          }
-                          onClick={(e) => {
-                            filterProducts(e, category.id);
-                          }}
-                        >
-                          {category.name}
-                        </button>
-                      </li>
-                    )
-                )}
-          </ul>
-        </nav>
+        <CategoryMobileDropdown
+          selectedCategory={selectedCategory}
+          handleDropdownChange={handleDropdownChange}
+          categories={categories}
+        />
+        <CategoryList
+          categories={categories}
+          selected={selected}
+          selectedCategory={selectedCategory}
+          filterProducts={filterProducts}
+        />
       </aside>
       <section className="products-box">
         {products && products.length > 0 ? (
           filteredProducts.map((product, key) => (
-            <div className="product" key={key}>
-              <div className="product-name-container">
-                <span className="product-name">{product.name}</span>
-              </div>
-              <div className="image-container">
-                <img
-                  src={process.env.PUBLIC_URL + product.imageURL}
-                  className="product-image"
-                />
-                <span className="product-description">
-                  {product.description}
-                </span>
-              </div>
-              <div className="product-mobile-box">
-                <img
-                  src={process.env.PUBLIC_URL + product.imageURL}
-                  className="product-mobile-image"
-                />
-                <div>
-                  <span className="product-mobile-description">
-                    {product.description}
-                  </span>
-                  <button
-                    className="buy-mobile-button"
-                    onClick={(e) => addToCart(e, product)}
-                  >{`Buy Now @Rs. ${product.price}`}</button>
-                </div>
-              </div>
-              <div className="product-footer">
-                <button
-                  className="buy-tablet-button"
-                  onClick={(e) => addToCart(e, product)}
-                >{`Buy Now @Rs. ${product.price}`}</button>
-                <span>MRP Rs.{product.price}</span>
-                <button
-                  className="buy-button"
-                  onClick={(e) => addToCart(e, product)}
-                >
-                  Buy Now
-                </button>
-              </div>
-            </div>
+            <ProductCard product={product} addToCart={addToCart} key={key} />
           ))
         ) : (
           <div
