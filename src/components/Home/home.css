@@ -17,9 +17,10 @@
     justify-content: space-evenly;
     margin: 10px 0px;
     padding: 20px;
-    border-top: 3px solid #f1f1dd;
+    /* border-top: 3px solid #f1f1dd; */
+    box-shadow: 0 -5px 5px -5px #999;
   }
-  .categories-container:nth-child(even) {
+  .categories-container:nth-child(odd) {
     flex-direction: row-reverse;
   }
   .category-description {
