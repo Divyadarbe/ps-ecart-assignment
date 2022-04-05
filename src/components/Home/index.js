@@ -1,27 +1,37 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Carousel from "./components/Carousel";
 import { CarouselItem } from "./components/Carousel";
+import url from "../../config.json";
 import "../../styles/styles.css";
-import "../../styles/mediaQueries.css";
+import "./home.css";
+import CategoryCard from "./components/CategoryCard";
 
-const Home = ({ history }) => {
+const Home = () => {
+  let navigate = useNavigate();
   const [categories, setCategories] = useState([]);
   const [banners, setBanners] = useState([]);
   const [error, setError] = useState("");
 
   const fetchCategories = async () => {
-    await fetch("http://localhost:5000/categories")
+    await fetch(`http://localhost:5000/categories`)
       .then((response) => response.json())
       .then((data) => setCategories(data))
-      .catch((err) => setError(err));
+      .catch((err) => {
+        console.log("error message", err);
+        setError("Something went wrong");
+      });
   };
   const fetchBanners = async () => {
-    await fetch("http://localhost:5000/banners")
+    await fetch(`http://localhost:5000/banners`)
       .then((response) => response.json())
       .then((data) => setBanners(data))
-      .catch((err) => setError(err));
+      .catch((err) => {
+        console.log("error message", err);
+        setError("Something went wrong");
+      });
   };
-  
+
   useEffect(() => {
     fetchBanners();
     fetchCategories();
@@ -29,9 +39,9 @@ const Home = ({ history }) => {
 
   const handleButtonClick = (e) => {
     e.preventDefault();
-    history.push("/products");
+    navigate("/products");
   };
-  console.log("Cate", categories);
+
   return (
     <section className="home-container container-padding">
       <div className="carousel-container">
@@ -39,7 +49,8 @@ const Home = ({ history }) => {
           <Carousel>
             {banners.map((banner) => (
               <CarouselItem key={banner.id}>
-                <img className="carousel-image"
+                <img
+                  className="carousel-image"
                   src={process.env.PUBLIC_URL + banner.bannerImageUrl}
                   alt="Banner"
                 />
@@ -48,26 +59,34 @@ const Home = ({ history }) => {
           </Carousel>
         )}
       </div>
+      {/* categories.sort((a, b) => a.order > b.order ? 1 : -1)  */}
       {categories &&
         categories.length > 0 &&
-        categories.map((category) => (
-          <div className="categories-container" key={category.id}>
-            <img
-              src={process.env.PUBLIC_URL + category.imageUrl}
-              // width="250"
-              // height="200"
-              className="category-product-image"
-            />
-            <div className="category-description">
-              <h3>{category.name}</h3>
-              <span>{category.description}</span>
-              <button
-                className="category-button"
-                onClick={handleButtonClick}
-              >{`Explore ${category.key}`}</button>
-            </div>
-          </div>
-        ))}
+        categories
+          .sort((a, b) => (a.order > b.order ? 1 : -1))
+          .map(
+            (category) =>
+              category.order != "-1" && (
+                <CategoryCard
+                  category={category}
+                  handleButtonClick={handleButtonClick}
+                />
+                // <div className="categories-container" key={category.id}>
+                //   <img
+                //     src={process.env.PUBLIC_URL + category.imageUrl}
+                //     className="category-product-image"
+                //   />
+                //   <div className="category-description">
+                //     <h3>{category.name}</h3>
+                //     <span>{category.description}</span>
+                //     <button
+                //       className="category-button"
+                //       onClick={handleButtonClick}
+                //     >{`Explore ${category.key}`}</button>
+                //   </div>
+                // </div>
+              )
+          )}
     </section>
   );
 };

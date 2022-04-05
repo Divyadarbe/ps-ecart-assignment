@@ -7,7 +7,6 @@ import Login from "./components/Login";
 import Products from "./components/Products";
 import SignUp from "./components/Signup";
 import "./styles/styles.css";
-import "./styles/mediaQueries.css";
 
 export const CartContext = createContext();
 
@@ -22,6 +21,7 @@ function App() {
           <Route path="login" element={<Login />}></Route>
           <Route path="signup" element={<SignUp />}></Route>
           <Route path="products" element={<Products />}></Route>
+          <Route path="*" element={<Home />} />
         </Routes>
         <Footer />
       </CartContext.Provider>
