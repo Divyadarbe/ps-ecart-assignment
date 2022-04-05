@@ -28,7 +28,7 @@ aside {
   grid-template-columns: repeat(4, 1fr);
   padding-left: 2.2rem;
 }
-nav {
+.products-sidebar {
   width: 250px;
 }
 

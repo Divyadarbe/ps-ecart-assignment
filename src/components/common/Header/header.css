@@ -72,12 +72,12 @@ header {
     margin-left: 1rem;
   }
   .cart-button {
-    width: 150px;
     height: 5rem;
     padding: 2.5rem 4rem;
     justify-content: center;
   }
   .header-menu {
     height: 7rem;
+    justify-content: space-between;
   }
 }
