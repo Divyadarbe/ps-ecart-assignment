@@ -16,6 +16,7 @@ const InputFIeld = ({
       <input
         type={type}
         name={name}
+        data-testid={name}
         required
         value={value}
         onChange={handleDataChange}
