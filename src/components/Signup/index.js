@@ -39,7 +39,7 @@ const Signup = () => {
   return (
     <div className="login-container">
       <div className="heading-container">
-        <h1 className="heading">Signup</h1>
+        <h1 className="heading" data-testid="heading">Signup</h1>
         <p className="description">
           We do not share your personal details with anyone.
         </p>

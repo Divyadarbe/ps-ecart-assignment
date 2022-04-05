@@ -10,14 +10,10 @@ const Modal = ({ handleClose, show, cartData, setCartData }) => {
   useEffect(() => {
     let total = 0;
     let cart_count = 0;
-    // for (let i = 0; i < cartData.length; i++) {
-    //   total = total + cartData[i].quantity * cartData[i].price;
-    //   cart_count = cart_count + cartData[i].quantity;
-    // }
-    cartData.map((c) => {
-      total = total + c.quantity * c.price;
-      cart_count = cart_count + c.quantity;
-    });
+    for (let i = 0; i < cartData.length; i++) {
+      total = total + cartData[i].quantity * cartData[i].price;
+      cart_count = cart_count + cartData[i].quantity;
+    }
     setCount(cart_count);
     setCartTotal(total);
   }, [cartData]);

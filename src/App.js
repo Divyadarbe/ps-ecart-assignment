@@ -21,6 +21,7 @@ function App() {
           <Route path="login" element={<Login />}></Route>
           <Route path="signup" element={<SignUp />}></Route>
           <Route path="products" element={<Products />}></Route>
+          <Route path="*" element={<Home />} />
         </Routes>
         <Footer />
       </CartContext.Provider>

@@ -20,7 +20,9 @@ const Login = () => {
   return (
     <div className="login-container">
       <div className="heading-container">
-        <h1 className="heading">Login</h1>
+        <h1 className="heading" data-testid="heading">
+          Login
+        </h1>
         <p className="description">
           Get access to your Orders, Wishlist and Recommendations
         </p>
